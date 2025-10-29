@@ -23,26 +23,21 @@ function Quiz(){
     }]
 
     const initialAnswers = [null, null, null];
+
     const [userAnswers, setUserAnswers] = useState(initialAnswers);
-    
     const [currentQuestion, setCurrentQuestion] = useState(0)
 
-    const [isFinished, setIsFinished] = useState(false);
+    const selectedAnswer = userAnswers[currentQuestion];
 
     function handleSelectedOption(option){
         const newUserAnswers = [...userAnswers] ;
         newUserAnswers[currentQuestion] = option;
         
-        setUserAnswers(userAnswers)
+        setUserAnswers(newUserAnswers)
     }
 
     function goToNext(){
-        if (currentQuestion === 3){
-
-        }
-        else{
-            setCurrentQuestion(currentQuestion + 1)
-        } 
+        setCurrentQuestion(currentQuestion + 1)
     }
     
     function goToPrev(){
@@ -55,14 +50,16 @@ function Quiz(){
             {questionBank[currentQuestion].question}            
         </p>
         {questionBank[currentQuestion].options.map((option) => (
-            <button className="option" onClick={() => handleSelectedOption(option)}>
+            <button className={"option" + (selectedAnswer === option ?  " selected" : "")} onClick={() => handleSelectedOption(option)}>
                 {option}
             </button>
         ))}
 
         <div className="nav-buttons">
-            <button onClick={goToPrev} disabled={currentQuestion === 0 }> Previous</button>
-            <button onClick={goToNext} > Next</button>
+            <button onClick={goToPrev} disabled = {currentQuestion === 0 }> Previous</button>
+            <button onClick={goToNext} disabled = {!selectedAnswer}> 
+                {currentQuestion === questionBank.length - 1 ? "Finish Quiz" : "Next"}
+            </button>
         </div>
     </div>
    );
