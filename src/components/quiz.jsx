@@ -21,12 +21,33 @@ function Quiz(){
         ],
         answer: "JavaScript XML"
     }]
-    // cosnt [currentQuestion, setCurrentQuestion] = useState(0)
+
     const initialAnswers = [null, null, null];
     const [userAnswers, setUserAnswers] = useState(initialAnswers);
     
     const [currentQuestion, setCurrentQuestion] = useState(0)
 
+    const [isFinished, setIsFinished] = useState(false);
+
+    function handleSelectedOption(option){
+        const newUserAnswers = [...userAnswers] ;
+        newUserAnswers[currentQuestion] = option;
+        
+        setUserAnswers(userAnswers)
+    }
+
+    function goToNext(){
+        if (currentQuestion === 3){
+
+        }
+        else{
+            setCurrentQuestion(currentQuestion + 1)
+        } 
+    }
+    
+    function goToPrev(){
+        setCurrentQuestion(currentQuestion - 1)
+    }
    return(
     <div>
         <h2> Question {currentQuestion + 1}</h2>
@@ -40,8 +61,8 @@ function Quiz(){
         ))}
 
         <div className="nav-buttons">
-            <button>Previous</button>
-            <button>Next</button>
+            <button onClick={goToPrev} disabled={currentQuestion === 0 }> Previous</button>
+            <button onClick={goToNext} > Next</button>
         </div>
     </div>
    );
